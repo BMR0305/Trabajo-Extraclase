@@ -6,10 +6,19 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+/**
+ *
+ * @author Bryan Martínez
+ */
 public class Ventana_principal extends javax.swing.JFrame implements Observer {
-
+    /**
+     *
+     */
     public List<javax.swing.JButton> botones_chat = new ArrayList<javax.swing.JButton>();
 
+    /**
+     *Rellena la lista con los botones de los chats 
+     */
     public void llenar_lista() {
         this.botones_chat.add(this.chat_1);
         this.botones_chat.add(this.chat_2);
@@ -22,6 +31,9 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
 
     }
 
+    /**
+     *Inicia la ventana y el servidor. a la vez asigna el puerto y llama la función para llenar la lista
+     */
     public Ventana_principal() {
         initComponents();
         this.getRootPane().setDefaultButton(this.send);
@@ -311,7 +323,9 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     *Envió y verificación del mensaje, asignación del boton al chat creado 
+     */
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
 
         if (this.port_a.getText().equals(this.port.getText())){
@@ -483,6 +497,10 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
         }
     }//GEN-LAST:event_portKeyTyped
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -516,7 +534,9 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton send;
     private javax.swing.JPanel send_panel;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     *Recibe el mensaje y asgina un boton de chat a la conversación 
+     */
     @Override
     public void update(Observable o, Object arg) {
         for (int i = 0; i < this.botones_chat.size(); i++) {

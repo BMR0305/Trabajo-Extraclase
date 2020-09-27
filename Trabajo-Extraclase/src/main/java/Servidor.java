@@ -7,9 +7,25 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Bryan Martínez
+ */
 public class Servidor extends Observable implements Runnable{
+
+    /**
+     *
+     */
     public int puerto = 5000;
+
+    /**
+     *
+     */
     public ServerSocket servidor = null;
+
+    /**
+     *
+     */
     public Servidor (){
         boolean flag =true;
         while (flag){
@@ -22,6 +38,9 @@ public class Servidor extends Observable implements Runnable{
         }
         this.puerto= puerto;
     }
+    /**
+     *Inicia el servidor y esta atento a recibir mensajes para notificar y crear un nuevo chat o agregar el mensaje a uno existente
+     */    
     @Override
     public void run() {
         Socket sc = null;

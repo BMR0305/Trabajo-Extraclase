@@ -7,18 +7,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-
+/**
+ *
+ * @author Bryan Martínez
+ */
 public class Cliente implements Runnable{
     
+    /**
+     *
+     */
     public int puerto;
+
+    /**
+     *
+     */
     public String mensaje;
     
+    /**
+     *
+     * @param puerto
+     * @param mensaje
+     */
     public Cliente(int puerto, String mensaje){
         this.puerto = puerto;
         this.mensaje= mensaje;
                 
     }
-    
+    /**
+     *Creacion del nuevo cliente y envio del mensaje
+     */
     @Override
     public void run() {
         String host = "127.0.0.1";
