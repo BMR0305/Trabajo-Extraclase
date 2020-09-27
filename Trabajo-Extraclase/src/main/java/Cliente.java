@@ -1,9 +1,11 @@
  
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class Cliente implements Runnable{
@@ -25,11 +27,14 @@ public class Cliente implements Runnable{
             Socket sc = new Socket(host, puerto);
             out = new DataOutputStream(sc.getOutputStream());
             out.writeUTF(mensaje);
-            
+            String[] components = mensaje.split("\\|");
+            Chat chat = new Chat(String.valueOf(puerto), components[1]);
             sc.close();
-        
-        }catch(IOException ex){
+            
+        }catch(ConnectException e){
+            JOptionPane.showMessageDialog(null, "No se pudo realizar la conexion con el puerto");
+        } catch (IOException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-    }
+        }
 }
 }

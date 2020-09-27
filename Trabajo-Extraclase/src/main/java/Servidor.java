@@ -27,19 +27,19 @@ public class Servidor extends Observable implements Runnable{
         Socket sc = null;
         DataInputStream in;
         try{
-            System.out.println("Servidor conectado");
-            System.out.println(puerto);
             while(true){
                 sc = servidor.accept();
                 in = new DataInputStream(sc.getInputStream());
 
                 String mensaje = in.readUTF();
+                String[] components = mensaje.split("\\|");
+                Chat chat = new Chat(components[0], components[1]);
                 
                 this.setChanged();
-                this.notifyObservers(mensaje);
+                this.notifyObservers(components[0]);
                 this.clearChanged();
-
                 sc.close();
+                
             } 
         }catch (IOException ex){ 
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
