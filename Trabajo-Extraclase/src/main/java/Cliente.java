@@ -3,15 +3,16 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Bryan Martínez
  */
 public class Cliente implements Runnable{
+    private static Logger log = LoggerFactory.getLogger(Cliente.class);
     
     /**
      *
@@ -49,9 +50,11 @@ public class Cliente implements Runnable{
             sc.close();
             
         }catch(ConnectException e){
+            log.error(e.getMessage());
             JOptionPane.showMessageDialog(null, "No se pudo realizar la conexion con el puerto");
+           
         } catch (IOException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex.getMessage(), ex);
         }
 }
 }

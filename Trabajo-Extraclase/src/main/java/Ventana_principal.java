@@ -1,10 +1,13 @@
 
+import com.sun.glass.events.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -15,6 +18,7 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
      *
      */
     public List<javax.swing.JButton> botones_chat = new ArrayList<javax.swing.JButton>();
+     private static Logger log = LoggerFactory.getLogger(Ventana_principal.class);
 
     /**
      *Rellena la lista con los botones de los chats 
@@ -325,10 +329,9 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
      *Envió y verificación del mensaje, asignación del boton al chat creado 
      */
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
-
+        try{
         if (this.port_a.getText().equals(this.port.getText())){
-            JOptionPane.showMessageDialog(rootPane, "El puerto no debe de ser el mismo que el propio");
-            this.port.setText(null);
+            throw new IllegalArgumentException("Se trato de enviar mensajes al mismo perot en el que está escuchando");       
         }
         else if (this.message.getText().equals("")){
           JOptionPane.showMessageDialog(rootPane, "El mensaje debe de incluir un contenido");
@@ -359,7 +362,12 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
 
         }
 
-
+        }
+        catch (IllegalArgumentException e){
+            log.error(e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "El puerto no debe de ser el mismo que el propio");
+            this.port.setText(null);
+        }
     }//GEN-LAST:event_sendActionPerformed
 
     private void chat_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chat_1ActionPerformed
@@ -486,12 +494,18 @@ public class Ventana_principal extends javax.swing.JFrame implements Observer {
     }//GEN-LAST:event_chat_8ActionPerformed
 
     private void portKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_portKeyTyped
+        try {
         char validar = evt.getKeyChar();
-        
         if (Character.isLetter(validar)){
+            throw new IllegalArgumentException("Se introdujo un caracter no válido");  
+        }
+        }
+        catch(IllegalArgumentException e){
+            log.error(e.getMessage());
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(rootPane, "Por favor solo ingresar números");
+              
         }
     }//GEN-LAST:event_portKeyTyped
 

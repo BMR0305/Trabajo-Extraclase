@@ -4,14 +4,14 @@ import java.net.ServerSocket;
 import java.io.DataInputStream;
 import java.net.Socket;
 import java.util.Observable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Bryan Martínez
  */
 public class Servidor extends Observable implements Runnable{
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(Servidor.class);
 
     /**
      *
@@ -33,10 +33,11 @@ public class Servidor extends Observable implements Runnable{
                 this.servidor = new ServerSocket(puerto);
                 flag = false;
             }catch(IOException ex){
-                puerto+=1;           
+                log.error(ex.getMessage(), ex);
+                puerto+=10;           
             }  
         }
-        this.puerto= puerto;
+        this.puerto = puerto;
     }
     /**
      *Inicia el servidor y esta atento a recibir mensajes para notificar y crear un nuevo chat o agregar el mensaje a uno existente
@@ -61,7 +62,7 @@ public class Servidor extends Observable implements Runnable{
                 
             } 
         }catch (IOException ex){ 
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex.getMessage(), ex);
             
         }
       
